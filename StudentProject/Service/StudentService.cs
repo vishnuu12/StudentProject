@@ -60,9 +60,9 @@ namespace StudentProject.Service
         public async Task<int> AddStudent(StudentVM student)
         {
 
-            var item = mapper.Map<Student>(student);
-            await studentRepository.AddStudent(item);
-            return item.Id;
+            var studentData = mapper.Map<Student>(student);
+            await studentRepository.AddStudent(studentData);
+            return studentData.Id;
         }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace StudentProject.Service
         public async Task UpdateStudent(StudentVM student)
         {
 
-            var item = mapper.Map<Student>(student);
-            await studentRepository.UpdateStudent(item);
+            var studentData = mapper.Map<Student>(student);
+            await studentRepository.UpdateStudent(studentData);
         }
 
     }

@@ -72,7 +72,6 @@ namespace StudentProject.Controllers
         /// <summary>
         /// Creation or Updation Operation
         /// </summary>
-        /// <param name="studentId"></param>
         /// <param name="studentData"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
@@ -115,7 +114,6 @@ namespace StudentProject.Controllers
         /// <summary>
         /// Creation or Updation Operation
         /// </summary>
-        /// <param name="studentId"></param>
         /// <param name="studentData"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>

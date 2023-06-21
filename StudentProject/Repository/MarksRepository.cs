@@ -34,11 +34,6 @@ namespace StudentProject.Repository
         /// <returns></returns>
         public async Task AddMarks(Marks mark)
         {
-            //MarkDto mark = new MarkDto();
-            //mark.StudentId = student.Marks.First().StudentId;
-            //mark.Tamil = student.Marks.First().Tamil;
-            //mark.English = student.Marks.First().English;
-            //mark.Maths = student.Marks.First().Maths;
             await this.dbContext.Set<Marks>().AddAsync(mark);
             dbContext.SaveChanges();
         }
@@ -50,11 +45,6 @@ namespace StudentProject.Repository
         /// <returns></returns>
         public async Task UpdateMarks(Marks mark)
         {
-            //MarkDto mark = new MarkDto();
-            //mark.StudentId = student.Marks.First().StudentId;
-            //mark.Tamil = student.Marks.First().Tamil;
-            //mark.English = student.Marks.First().English;
-            //mark.Maths = student.Marks.First().Maths;
             dbContext.Entry(mark).State = EntityState.Modified;
             dbContext.SaveChanges();
         }
