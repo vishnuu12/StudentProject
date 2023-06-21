@@ -8,7 +8,10 @@ namespace StudentProject.Mapper
     {
         public MarksMapper()
         {
-            CreateMap<MarkDto, Marks>().ReverseMap();
+            CreateMap<StudentVM, Marks>()
+                .ForMember(dest => dest.Id, opt => opt
+                .MapFrom(src => src.MarksId))
+                .ReverseMap();
 
         }
     }

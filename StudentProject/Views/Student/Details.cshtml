@@ -1,4 +1,4 @@
-﻿@model StudentProject.Dto.StudentDto
+﻿@model StudentProject.Dto.StudentVM
 
 @{
     ViewData["Title"] = "Student List";
@@ -11,10 +11,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.StudentId)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Id)
+            @Html.DisplayFor(model => model.StudentId)
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.StudentName)
@@ -35,26 +35,26 @@
             @Html.DisplayFor(model => model.DateOfBirth)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().Tamil)
+            @Html.DisplayNameFor(model => model.Tamil)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Marks.FirstOrDefault().Tamil)
+            @Html.DisplayFor(model => model.Tamil)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().English)
+            @Html.DisplayNameFor(model => model.English)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Marks.FirstOrDefault().English)
+            @Html.DisplayFor(model => model.English)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().Maths)
+            @Html.DisplayNameFor(model => model.Maths)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Marks.FirstOrDefault().Maths)
+            @Html.DisplayFor(model => model.Maths)
         </dd>
     </dl>
     <div>
-        <a class="btn btn-primary" asp-action="AddOrEdit" asp-route-studentId="@Model.Id">Edit</a>
+        <a class="btn btn-primary" asp-action="AddOrEdit" asp-route-studentId="@Model.StudentId">Edit</a>
         <a class="btn btn-danger" asp-action="Index">Back</a>
     </div>
 </div>

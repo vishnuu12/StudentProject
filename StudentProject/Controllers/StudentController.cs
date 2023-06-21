@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using StudentProject.Dto;
-using StudentProject.Models;
-using StudentProject.Repository.Interface;
 using StudentProject.Service.Interface;
 
 namespace StudentProject.Controllers
@@ -10,9 +7,11 @@ namespace StudentProject.Controllers
     public class StudentController : Controller
     {
         private IStudentService studentService;
-        public StudentController(IStudentService studentService)
+        private IMarksService marksService;
+        public StudentController(IStudentService studentService, IMarksService marksService)
         {
             this.studentService = studentService;
+            this.marksService = marksService;
         }
 
         /// <summary>
@@ -32,7 +31,7 @@ namespace StudentProject.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(int studentId)
         {
-            if (studentId == null)
+            if (studentId == 0)
             {
                 return NotFound();
             }
@@ -69,6 +68,7 @@ namespace StudentProject.Controllers
                 return View(student);
             }
         }
+
         /// <summary>
         /// Creation or Updation Operation
         /// </summary>
@@ -76,55 +76,77 @@ namespace StudentProject.Controllers
         /// <param name="studentData"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<IActionResult> Add([FromBody] int studentId, 
-            [Bind("Id,StudentName,Class,DateOfBirth,Tamil,English,Maths")] StudentDto studentData)
+        /// 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrEditStudent(StudentVM studentData)
         {
-            ViewBag.PageName = studentId == 0 ? "Create Student" : "Edit Student";
-            ViewBag.IsEdit = studentId == 0 ? false : true;
-
-            bool IsStudentExist = false;
-
-            StudentDto? student = await this.studentService.GetStudentById(studentId);
-
-            if (student != null)
-            {
-                IsStudentExist = true;
-            }
-            else
-            {
-                student = new StudentDto();
-            }
             if (ModelState.IsValid)
             {
-                try
-                {
-                    student.Id = studentData.Id;
-                    student.StudentName = studentData.StudentName;
-                    student.Class = studentData.Class;
-                    student.DateOfBirth = studentData.DateOfBirth;
-                    student.Marks.FirstOrDefault().Tamil = studentData.Marks.FirstOrDefault().Tamil;
-                    student.Marks.FirstOrDefault().English = studentData.Marks.FirstOrDefault().English;
-                    student.Marks.FirstOrDefault().Maths = studentData.Marks.FirstOrDefault().Maths;
 
-                    if (IsStudentExist)
+                if (studentData.StudentId != 0)
+                {
+                    StudentVM? student = await this.studentService.GetStudentById(studentData.StudentId);
+                    if (student == null)
                     {
-                        await this.studentService.UpdateStudent(student);
-                        student.Marks.FirstOrDefault().StudentId = studentData.Marks.FirstOrDefault().StudentId;
-                        await this.studentService.UpdateMark(student);
+                        throw new Exception($"Invalid !!");
                     }
                     else
                     {
-                        studentId = await this.studentService.AddStudent(student);
-                        student.Marks.FirstOrDefault().StudentId = studentId;
-                        await this.studentService.AddMark(student);
+                        await this.studentService.UpdateStudent(studentData);
                     }
-
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw new Exception($"Invalid !!");
+                    studentData.StudentId = await this.studentService.AddStudent(studentData);
                 }
-                return RedirectToAction(nameof(Index));
+            }
+            else 
+            {
+                throw new Exception($"Invalid !!");
+            }
+
+            await AddOrEditMark(studentData);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        /// <summary>
+        /// Creation or Updation Operation
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <param name="studentData"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        /// 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrEditMark(StudentVM studentData)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (studentData.MarksId != 0)
+                {
+                    StudentVM? student = await this.marksService.GetMarksById(studentData.MarksId);
+                    if (student == null)
+                    {
+                        throw new Exception($"Invalid !!");
+                    }
+                    else
+                    {
+                        await this.marksService.UpdateMarks(studentData);
+                    }
+                }
+                else
+                {
+                    await this.marksService.AddMarks(studentData);
+                }
+            }
+            else
+            {
+                throw new Exception($"Invalid !!");
             }
 
             return View(studentData);

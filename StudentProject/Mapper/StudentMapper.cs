@@ -8,9 +8,11 @@ namespace StudentProject.Mapper
     {
         public StudentMapper()
         {
-            CreateMap<StudentDto, Student>()
+            CreateMap<StudentVM, Student>()
                 .ForMember(dest => dest.DOB, opt => opt
                 .MapFrom(src => src.DateOfBirth))
+                .ForMember(dest => dest.Id, opt => opt
+                .MapFrom(src => src.StudentId))
                 .ReverseMap();
 
         }

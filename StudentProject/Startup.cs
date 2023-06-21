@@ -23,7 +23,9 @@ namespace StudentProject
             services.AddDbContext<SchoolDbContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IMarksRepository, MarksRepository>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IMarksService, MarksService>();
             var config = new MapperConfiguration(c => {
                 c.AddProfile<StudentMapper>();
                 c.AddProfile<MarksMapper>();

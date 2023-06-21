@@ -45,51 +45,22 @@ namespace StudentProject.Repository
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
-        public async Task AddStudent(StudentDto student)
+        public async Task AddStudent(Student student)
         {
-            await this.dbContext.Set<StudentDto>().AddAsync(student);
+            await this.dbContext.Set<Student>().AddAsync(student);
             dbContext.SaveChanges();
         }
 
-        /// <summary>
-        /// AddMark method for creating student mark records
-        /// </summary>
-        /// <param name="student"></param>
-        /// <returns></returns>
-        public async Task AddMark(StudentDto student)
-        {
-            MarkDto mark = new MarkDto();
-            mark.StudentId = student.Marks.First().StudentId;
-            mark.Tamil = student.Marks.First().Tamil;
-            mark.English = student.Marks.First().English;
-            mark.Maths = student.Marks.First().Maths;
-            await this.dbContext.Set<MarkDto>().AddAsync(mark);
-            dbContext.SaveChanges();
-        }
 
         /// <summary>
         /// UpdateStudent method for updating student datas
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
-        public async Task UpdateStudent(StudentDto student)
+        public async Task UpdateStudent(Student student)
         {
             dbContext.Entry(student).State = EntityState.Modified;
-        }
-
-        /// <summary>
-        /// UpdateMark method for updating student mark datas
-        /// </summary>
-        /// <param name="student"></param>
-        /// <returns></returns>
-        public async Task UpdateMark(StudentDto student)
-        {
-            MarkDto mark = new MarkDto();
-            mark.StudentId = student.Marks.First().StudentId;
-            mark.Tamil = student.Marks.First().Tamil;
-            mark.English = student.Marks.First().English;
-            mark.Maths = student.Marks.First().Maths;
-            dbContext.Entry(mark).State = EntityState.Modified;
+            dbContext.SaveChanges();
         }
 
     }

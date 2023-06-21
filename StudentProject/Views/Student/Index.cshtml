@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StudentProject.Dto.StudentDto>
+﻿@model IEnumerable<StudentProject.Dto.StudentVM>
 
 @{
     ViewData["Title"] = "Student List";
@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Id)
+                    @Html.DisplayNameFor(model => model.StudentId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.StudentName)
@@ -28,13 +28,13 @@
                     @Html.DisplayNameFor(model => model.DateOfBirth)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().Tamil)
+                    @Html.DisplayNameFor(model => model.Tamil)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().English)
+                    @Html.DisplayNameFor(model => model.English)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().Maths)
+                    @Html.DisplayNameFor(model => model.Maths)
                 </th>
                 <th></th>
                 <th>Edit Action</th>
@@ -46,7 +46,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Id)
+                        @Html.DisplayFor(modelItem => item.StudentId)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.StudentName)
@@ -58,20 +58,20 @@
                         @Html.DisplayFor(modelItem => item.DateOfBirth)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Marks.FirstOrDefault().Tamil)
+                        @Html.DisplayFor(modelItem => item.Tamil)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Marks.FirstOrDefault().English)
+                        @Html.DisplayFor(modelItem => item.English)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Marks.FirstOrDefault().Maths)
+                        @Html.DisplayFor(modelItem => item.Maths)
                     </td>
                     <td>
                     <td class="text-center">
-                        <a asp-action="AddOrEdit" class="btn btn-outline-primary" asp-route-studentId="@item.Id">Edit</a>
+                        <a asp-action="AddOrEdit" class="btn btn-outline-primary" asp-route-studentId="@item.StudentId">Edit</a>
                     </td>
                     <td class="text-center">
-                        <a asp-action="Details" class="btn btn-outline-info" asp-route-studentId="@item.Id">Details</a>
+                        <a asp-action="Details" class="btn btn-outline-info" asp-route-studentId="@item.StudentId">Details</a>
                     </td>
                 </tr>
             }

@@ -21,10 +21,19 @@ namespace StudentProject.Service
         /// Get All Students List by using Dto Objects
         /// </summary>
         /// <returns></returns>
-        public List<StudentDto> GetStudents()
+        public List<StudentVM> GetStudents()
         {
             var students = studentRepository.GetAll();
-            return mapper.Map<List<StudentDto>>(students);
+            List<StudentVM> studentList = new List<StudentVM>();
+            foreach(var student in students)
+            {
+                StudentVM studentVM = mapper.Map<StudentVM>(student);
+                this.mapper.Map<Marks,
+                    StudentVM>(student.Marks.FirstOrDefault(), studentVM);
+                studentList.Add(studentVM);
+
+            }
+            return studentList;
         }
 
         /// <summary>
@@ -32,10 +41,15 @@ namespace StudentProject.Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<StudentDto> GetStudentById(int id)
+        public async Task<StudentVM> GetStudentById(int id)
         {
-            var students = await this.studentRepository.GetStudentById(id);
-            return mapper.Map<StudentDto>(students);
+            var student = await this.studentRepository.GetStudentById(id);
+
+            StudentVM studentVM = mapper.Map<StudentVM>(student);
+            this.mapper.Map<Marks,
+                StudentVM>(student.Marks.FirstOrDefault(), studentVM);
+
+            return studentVM;
         }
 
         /// <summary>
@@ -43,24 +57,11 @@ namespace StudentProject.Service
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
-        public async Task<int> AddStudent(StudentDto student)
+        public async Task<int> AddStudent(StudentVM student)
         {
 
-            var item = mapper.Map<StudentDto>(student);
+            var item = mapper.Map<Student>(student);
             await studentRepository.AddStudent(item);
-            return item.Id;
-        }
-
-        /// <summary>
-        /// Student Mark Creation Operation
-        /// </summary>
-        /// <param name="student"></param>
-        /// <returns></returns>
-        public async Task<int> AddMark(StudentDto student)
-        {
-
-            var item = mapper.Map<StudentDto>(student);
-            await studentRepository.AddMark(item);
             return item.Id;
         }
 
@@ -69,23 +70,11 @@ namespace StudentProject.Service
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
-        public async Task UpdateStudent(StudentDto student)
+        public async Task UpdateStudent(StudentVM student)
         {
 
-            var item = mapper.Map<StudentDto>(student);
+            var item = mapper.Map<Student>(student);
             await studentRepository.UpdateStudent(item);
-        }
-
-        /// <summary>
-        /// Student Mark Details Updation Operation
-        /// </summary>
-        /// <param name="student"></param>
-        /// <returns></returns>
-        public async Task UpdateMark(StudentDto student)
-        {
-
-            var item = mapper.Map<StudentDto>(student);
-            await studentRepository.UpdateMark(item);
         }
 
     }
