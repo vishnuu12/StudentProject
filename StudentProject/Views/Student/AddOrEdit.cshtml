@@ -1,0 +1,62 @@
+﻿@model StudentProject.Dto.StudentDto
+
+@{
+    ViewData["Title"] = "Create Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container p-3 my-3 border">
+    <h1> @ViewBag.PageName</h1>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <hr />
+            <form asp-action="AddOrEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @if (@ViewBag.IsEdit)
+                {
+                    <input type="hidden" asp-for="Id" />
+                }
+                <div class="form-group">
+                    <label asp-for="StudentName" class="control-label"></label>
+                    <input asp-for="StudentName" class="form-control" />
+                    <span asp-validation-for="StudentName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Class" class="control-label"></label>
+                    <input asp-for="Class" class="form-control" />
+                    <span asp-validation-for="Class" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateOfBirth" class="control-label"></label>
+                    <input asp-for="DateOfBirth" class="form-control" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Marks.FirstOrDefault().Tamil" class="control-label"></label>
+                    <input asp-for="Marks.FirstOrDefault().Tamil" class="form-control" />
+                    <span asp-validation-for="Marks.FirstOrDefault().Tamil" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Marks.FirstOrDefault().English" class="control-label"></label>
+                    <input asp-for="Marks.FirstOrDefault().English" class="form-control" />
+                    <span asp-validation-for="Marks.FirstOrDefault().English" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Marks.FirstOrDefault().Maths" class="control-label"></label>
+                    <input asp-for="Marks.FirstOrDefault().Maths" class="form-control" />
+                    <span asp-validation-for="Marks.FirstOrDefault().Maths" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Save" />
+                    <a class="btn btn-danger" asp-action="Index">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

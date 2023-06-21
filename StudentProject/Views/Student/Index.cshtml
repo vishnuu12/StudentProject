@@ -1,0 +1,80 @@
+﻿@model IEnumerable<StudentProject.Dto.StudentDto>
+
+@{
+    ViewData["Title"] = "Student List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1> @ViewData["Title"] </h1>
+
+<p style="text-align:right;margin-right:20px;">
+    <a class="btn btn-outline-primary" asp-action="AddOrEdit">Create New</a>
+</p>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().Tamil)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().English)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Marks.FirstOrDefault().Maths)
+                </th>
+                <th></th>
+                <th>Edit Action</th>
+                <th>Details Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Marks.FirstOrDefault().Tamil)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Marks.FirstOrDefault().English)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Marks.FirstOrDefault().Maths)
+                    </td>
+                    <td>
+                    <td class="text-center">
+                        <a asp-action="AddOrEdit" class="btn btn-outline-primary" asp-route-studentId="@item.Id">Edit</a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Details" class="btn btn-outline-info" asp-route-studentId="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
